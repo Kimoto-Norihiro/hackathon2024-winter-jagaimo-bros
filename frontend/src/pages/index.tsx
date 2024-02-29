@@ -35,11 +35,16 @@ const headerStyle: React.CSSProperties = {
   const titleStyle: React.CSSProperties = {
     color: '#fff',
     margin: '20px 0',
+    fontSize: "50px"
   };
 
   const buttonStyle: React.CSSProperties = {
-    marginTop: "130px"
-    
+    marginTop: "170px",
+    width: "350px",
+    height: "120px",
+    backgroundColor: "lightgray",   
+    fontSize: "30px", 
+    fontWeight: "bold"
   };
 
 // 認証画面とタイトル

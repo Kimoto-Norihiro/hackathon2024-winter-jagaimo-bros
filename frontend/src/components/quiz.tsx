@@ -15,6 +15,24 @@ const cardStyle: React.CSSProperties = {
     justifyContent: 'space-between',
 };
 
+const titleStyle: React.CSSProperties = {
+    fontFamily: 'Arial, sans-serif',
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    width: '100%',
+    padding: '10px',
+    fontSize: '4.5em',
+    color: '#fff',
+    backgroundColor: '#304a77',
+    border: 'none',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
+    zIndex: 1, //他の要素より手前に表示
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center'
+};
+
 const radioGroupStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
@@ -37,6 +55,7 @@ const buttonParentStyle: React.CSSProperties = {
     width: '100%',
     padding: '20px',
 }
+
 
 type Props = {
     setOpenPressReleaseField: (value: boolean) => void;
@@ -94,28 +113,16 @@ export const Quiz = (props: Props) => {
             justifyContent: 'center',
             alignItems: 'center',
             height: '100vh',
+            width: '100vw',//ビューポイントの幅に合わせる
             overflow: 'auto',
             background: 'linear-gradient(#304a77, white)',
             padding: '0 50px',
             boxSizing: 'border-box',
             position: 'relative'
         }}>
-            <div style={{
-            fontFamily: 'Arial, sans-serif',
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            width: '100%',
-            padding: '10px',
-            fontSize: '4.5em',
-            color: '#fff',
-            backgroundColor: "304a77",
-            border: 'none',
-            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
-            zIndex: 1, //他の要素より手前に表示
-            display: 'flex',
+            <div style={{...titleStyle, zIndex: 1
             }}>
-            PRtimeクイズ
+            PR TIMESクイズ
             </div>
             <div style={{
             backgroundColor: 'transparent',
@@ -171,7 +178,7 @@ export const Quiz = (props: Props) => {
                     <Alert
                         type="info"
                         message={
-                            <div>
+                            <div style={{width: '150px' }}>
                                 <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> 問題を生成中です
                             </div>
                         }

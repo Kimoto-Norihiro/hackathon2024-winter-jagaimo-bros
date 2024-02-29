@@ -27,7 +27,7 @@ type GenerateQuizByIndustryIDInput struct {
 	IndustryID int `uri:"industry_id" binding:"required"`
 }
 
-func GenerateQuizByIndustryIDHandler(c *gin.Context) {
+func GenerateQuizByIndustryID(c *gin.Context) {
 	var input GenerateQuizByIndustryIDInput
 	if err := c.ShouldBindUri(&input); err != nil {
 		c.JSON(400, gin.H{"error": err.Error()})

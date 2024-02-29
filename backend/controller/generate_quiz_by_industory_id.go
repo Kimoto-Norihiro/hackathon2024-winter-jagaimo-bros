@@ -69,7 +69,7 @@ func GenerateQuizByIndustryID(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, gin.H{"company_id": pr.CompanyID, "press_release_ID": pr.ReleaseID, "quiz": quiz})
+	c.JSON(200, gin.H{"press_release_ID": pr, "quiz": quiz})
 }
 
 func generateQuiz(ctx context.Context, body string) (*Quiz, error) {

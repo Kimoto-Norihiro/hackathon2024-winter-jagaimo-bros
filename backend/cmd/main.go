@@ -19,7 +19,6 @@ func main() {
 	r := gin.Default()
 
 	r.Use(cors.Default())
-	r.GET("companies/:company_id/releases/:release_id", controller.GetPressRelease)
 	r.GET("generate_quiz/industries/:industry_id", controller.GenerateQuizByIndustryID)
 
 	r.Run(":8000")

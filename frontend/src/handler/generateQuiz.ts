@@ -34,7 +34,7 @@ export type PressRelease = {
 
 export async function generateQuiz(industryID: number): Promise<GenerateQuizResponse> {
 	try {
-		const res = await axios.get(`http://localhost:8000/generate_quiz/industries/${industryID}`)
+		const res = await axios.get(`https://jagaimo-bros-api-eac5862fc2c0.herokuapp.com/generate_quiz/industries/${industryID}`)
 		console.log(res.data)
 		return res.data as GenerateQuizResponse
 	} catch (err) {

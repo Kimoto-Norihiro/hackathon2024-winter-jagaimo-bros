@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
-import { Card, Radio, Button } from 'antd';
+import { Alert, Card, Spin, Radio, Button, Col, Row } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
+import { LoadingOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
+import axios from 'axios';
+import { useQuizGetApi } from './useQuizGetApi';
+import { PressRelease } from './pressRelease';
 
 const cardStyle: React.CSSProperties = {
     width: 800,
@@ -36,15 +40,17 @@ const buttonParentStyle: React.CSSProperties = {
 
 type Props = {
     setOpenPressReleaseField: (value: boolean) => void;
+    setOpenProgressModal: (value: boolean) => void;
 }
 
 export const Quiz = (props: Props) => {
-    const { setOpenPressReleaseField } = props;
+    const { setOpenPressReleaseField, setOpenProgressModal } = props;
 
-    const { query } = useRouter();
-    const { id } = query;
-    // Todo 業種idを基に問題を生成する
+    const { loading, data } = useQuizGetApi();
 
+    // Apiから取得したプレスリリースとクイズです
+    const pressRelease = data?.press_release_ID;
+    const question = data?.quiz;
 
     const questions = [
     {
@@ -80,68 +86,100 @@ export const Quiz = (props: Props) => {
     }
     };
 
-    const onPreviousQuestion = () => {
-    if(currentQuestionIndex > 0) {
-        setCurrentQuestionIndex(currentQuestionIndex - 1);
-    }
-    };
+    const [answered, setAnswered] = useState(false);
 
     return (
-    <div style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        overflow: 'auto',
-        background: 'linear-gradient(#304a77, white)',
-        padding: '0 50px',
-        boxSizing: 'border-box',
-        position: 'relative'
-    }}>
         <div style={{
-        fontFamily: 'Arial, sans-serif',
-        position: 'absolute',
-        top: 0,
-        left: 0,
-        width: '100%',
-        padding: '10px',
-        fontSize: '4.5em',
-        color: '#fff',
-        backgroundColor: "304a77",
-        border: 'none',
-        boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
-        zIndex: 1, //他の要素より手前に表示
-        display: 'flex',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100vh',
+            overflow: 'auto',
+            background: 'linear-gradient(#304a77, white)',
+            padding: '0 50px',
+            boxSizing: 'border-box',
+            position: 'relative'
         }}>
-        PRtimeクイズ
-        </div>
-        <div style={{
-        backgroundColor: 'transparent',
-        width: '100%',
-        height: '100%',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'relative' // 親要素を相対的な位置指定に変更
-        }}>
-        <Card style={cardStyle}>
-            <h2 style={{ fontSize:'2em'}}>{questions[currentQuestionIndex].question}</h2>
-            <Radio.Group onChange={onChange} value={selectedAnswer} style={radioGroupStyle}>
-            {questions[currentQuestionIndex].choices.map((choice, index) => (
-                <Radio key={index} style={radioStyle} value={index}>
-                {choice}
-                </Radio>
-            ))}
-            </Radio.Group>
-        </Card>
-        <div style={buttonParentStyle}>
-            {/* Todo: 前へボタンが必要か検証する */}
-            <Button style={{backgroundColor: "ButtonHighlight"}} onClick={() => setOpenPressReleaseField(true)}>回答</Button>
-            <Button style={{backgroundColor: "ButtonHighlight"}} onClick={onPreviousQuestion}>前へ</Button>
-            <Button style={{backgroundColor: "ButtonHighlight"}} onClick={onNextQuestion}>次へ</Button>
-        </div>
-        </div>
-    </div>    
+            <div style={{
+            fontFamily: 'Arial, sans-serif',
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            padding: '10px',
+            fontSize: '4.5em',
+            color: '#fff',
+            backgroundColor: "304a77",
+            border: 'none',
+            boxShadow: '0 2px 5px rgba(0, 0, 0, 0.15)',
+            zIndex: 1, //他の要素より手前に表示
+            display: 'flex',
+            }}>
+            PRtimeクイズ
+            </div>
+            <div style={{
+            backgroundColor: 'transparent',
+            width: '100%',
+            height: '100%',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            position: 'relative' // 親要素を相対的な位置指定に変更
+            }}>
+                {!loading && question ? (
+                    <Row gutter={16}>
+                        <Col span={12}>
+                            <Card style={cardStyle}>
+                                <h2 style={{ fontSize:'2em'}}>{questions[currentQuestionIndex].question}</h2>
+                                <Radio.Group onChange={onChange} value={selectedAnswer} style={radioGroupStyle}>
+                                {question.choices.map((choice, index) => (
+                                    <Radio key={index} style={radioStyle} value={index}>
+                                        {choice}
+                                    </Radio>
+                                ))}
+                                </Radio.Group>
+                            </Card>
+                            <div style={buttonParentStyle}>
+                                <Button 
+                                    style={{backgroundColor: "ButtonHighlight"}} 
+                                    onClick={() => {
+                                        setOpenPressReleaseField(true)
+                                        setAnswered(true)
+                                    }
+                                }>
+                                    回答
+                                </Button>
+                                {answered && 
+                                    <Button 
+                                        style={{backgroundColor: "ButtonHighlight"}} 
+                                        onClick={ () => {
+                                            onNextQuestion
+                                            setOpenProgressModal(true)
+                                        }}
+                                    >
+                                    次へ
+                                    </Button>
+                                }
+                            </div>
+                        </Col>
+                        <Col span={12}>
+                            {/* この<PressReleaseを表示した時前提のデザインでお願いします */}
+                            {/* <PressRelease /> */}
+                        </Col>
+                    </Row>
+                ) : (
+                    <Alert
+                        type="info"
+                        message={
+                            <div>
+                                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> 問題を生成中です
+                            </div>
+                        }
+                    />
+                )}
+                
+            </div>
+        </div>  
     );
 };
 

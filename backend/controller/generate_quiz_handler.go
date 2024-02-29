@@ -14,7 +14,7 @@ import (
 	"github.com/google/generative-ai-go/genai"
 	"google.golang.org/api/option"
 
-	"github.com/PRTIMES/hackathon2024-winter-jagaimo-bros/repository"
+	"github.com/PRTIMES/hackathon2024-winter-jagaimo-bros/ex_api"
 )
 
 type Quiz struct {
@@ -34,21 +34,21 @@ func GenerateQuizByIndustryIDHandler(c *gin.Context) {
 		return
 	}
 
-	companies, err := repository.GetCompanies(input.IndustryID)
+	companies, err := ex_api.GetCompanies(input.IndustryID)
 	if err != nil {
 		c.JSON(500, gin.H{"error": err.Error()})
 		return
 	}
 
-	var company *repository.Company
-	var pressReleases []*repository.PressRelease
+	var company *ex_api.Company
+	var pressReleases []*ex_api.PressRelease
 
 	// retry 999 times
 	for j := 0; j < 999; j++ {
 		i := rand.Intn(len(companies))
 		company = companies[i]
 
-		prs, err := repository.ListPressReleases(company.ID)
+		prs, err := ex_api.ListPressReleases(company.ID)
 		if err != nil {
 			c.JSON(500, gin.H{"error": err.Error()})
 			return

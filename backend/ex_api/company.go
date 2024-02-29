@@ -1,4 +1,4 @@
-package repository
+package ex_api
 
 import (
 	"encoding/json"

@@ -33,12 +33,12 @@ func GetPressRelease(companyID, releaseID int) (*PressRelease, error) {
 		return nil, err
 	}
 
-	var pressRelease *PressRelease
-	if err := json.Unmarshal(body, pressRelease); err != nil {
+	var pressRelease PressRelease
+	if err := json.Unmarshal(body, &pressRelease); err != nil {
 		return nil, err
 	}
 
-	return pressRelease, nil
+	return &pressRelease, nil
 }
 
 func ListPressReleases(companyID int) ([]*PressRelease, error) {

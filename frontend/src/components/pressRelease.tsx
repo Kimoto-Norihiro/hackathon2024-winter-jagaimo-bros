@@ -1,140 +1,26 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Card, Typography } from 'antd';
+import { PressRelease } from '@/handler/generateQuiz';
 
 const { Title, Paragraph } = Typography;
 
-export const PressRelease = () => {
-
-    const [pressRelease, setPressRelease] = useState({
-    title: '',
-    subtitle: '',
-    leadParagraph: '',
-    body: '',
-    image: '',
-    url: '',
-    });
-
-    useEffect(() => {
-    setPressRelease({
-        title: '【ルイ·ヴィトン】新作メンズ·コレクション「ニューフォーマル」よりバッグが登場',
-        subtitle: 'サブタイトル',
-        leadParagraph: 'リードパラグラフ',
-        body: `ルイ·ヴィトンは、新作メンズ·コレクション｢ニューフォーマル｣より、オンオフでも使用できる、洗練されたシーズンレスなデザインのバッグが登場。
-
-
-
-    メンズ･コレクション｢ニューフォーマル｣は、メゾンのシグネチャー･ディテールと上品なスタイルで、エレガントな装いを表現しています。
-
-
-
-    カッティングを施したフラップのコーナーとスマートなデザインが魅力の｢ファストライン･バッグパック｣。航空書簡から着想を得たネームタグと、直線的でシャープなLV イニシャルが個性を放ちます。中身を取出しやすいマグネット開閉式のフラップ付きコンパートメントに、ファスナー付きポケットを備えた、モダンで機能的なバックパックです。
-
-
-
-    製品名：ファストライン･バッグパック
-
-    価格：¥511,500
-
-    素材：レザー
-
-    サイズ：W 30 x H 40 x D 11 cm
-
-
-
-    落ち着いたエレガンスを愛する、スタイリッシュな男性に最適な｢テイクオフ･バックパック｣。レトロな航空書簡を想わせる柔らかくしなやかで上質なカーフレザーで仕立てました。マットなブラックメタルの｢LV｣がさりげないアクセントを加えます。大容量のメインコンパートメントとフロントのフラップポケットを備えた、週末旅行やシティライフにぴったりのバッグです。
-
-
-
-    製品名：テイクオフ･バックパック
-
-    価格：¥475,200
-
-    素材：グレインレザー
-
-    サイズ：W 30 x H 43 x D 14 cm
-
-
-
-
-
-    カウハイドレザーを使用し、モダンなラインにスマートな機能性を組み合わせて仕立てた｢パイロット･ブリーフケース｣。複数の内ポケットとマグネット開閉式のコンパートメントを備えた、中身を整理しやすく取出しやすいデザインが特徴です。コーナー部分を斜めにカッティングしたフロントポケットとトーン･オン･トーンのLV イニシャルが、｢アエログラム｣コレクションならではの個性を放ちます。
-
-
-
-    製品名：パイロット･ブリーフケース
-
-    価格：¥616,000
-
-    素材：レザー
-
-    サイズ：W 39 x H 29 x D 6 cm
-
-
-
-
-
-    モノグラム･パターンをエンボス加工したトリヨンレザーを使用し、機能性とスタイルを融合させた大容量のバッグ｢サックプラ｣。ストレートなエッジ、直角のライン、レザーのサイドバンド、ロール仕上げのレザーハンドルで、目を引くデザインに仕上げました。取外し & 調節可能なストラップで、ショルダーキャリーもお楽しみいただけます。ノートパソコンを収納できるパッドを入れたコンパートメント付き。
-
-
-
-    製品名：サックプラ
-
-    価格：¥492,800
-
-    素材：モノグラム･パターンをエンボス加工したトリヨンレザー
-
-    サイズ：W 36.5 x H 38 x D 9 cm
-
-
-
-    メゾンの創業者の息子にちなんで名付けられた、エクスクルーシブな新作｢ジョルジュ･トート MM｣。ラグジュアリーなレザーと、卓越したクラフツマンシップが融合したアイテムです。グレイン(しぼ)が美しいミレジム･レザーで仕立て、Sロックスタイルの留め具や内側に配したシグネチャー入りのメタルプレートなど、アイコニックなディテールを散りばめました。ビジネスシーンにもマッチする実用的で洗練されたバッグは、稀少で特別な一品を求める男性にぴったり。
-
-
-
-    製品名：ジョルジュ･トート MM
-
-    価格：¥1,408,000
-
-    素材：ミレジム･カーフレザー
-
-    サイズ：W 41 x H 29 x D 14 cm
-
-
-
-    *税込価格表記
-
-
-
-    PHOTO CREDIT：LOUIS VUITTON
-
-
-
-    ルイ･ヴィトンについて
-
-    1854年の創業以来、ルイ･ヴィトンは、革新とスタイルを組み合わせた独自のデザインを常に最高級な品質で提供し続けています。現在もトラベルラゲージ、バッグ、アクセサリーなどの製品を通じて、クリエイティブでありながらエレガントで実用的である、創業者ルイ･ヴィトンが生み出した｢旅の真髄(こころ)｣の精神を忠実に受け継いでいます。ルイ･ヴィトンというストーリーを作り上げたのは｢大胆さ｣でした。伝統を重んじ、歴史の中で建築家、アーティスト、デザイナーに門戸を開き、プレタポルテ、シューズ、アクセサリー、ウォッチ & ファインジュエリー、フレグランスなどの分野を開拓してきたのです。これらの丁寧に製作された製品は、ルイ･ヴィトンがクラフツマンシップにいかにこだわりを持ってきたかという証となっています。
-
-
-
-    詳細は、ルイ·ヴィトン 公式サイトhttps://www.louisvuitton.com をご覧ください。`,
-        image: 'https://prcdn.freetls.fastly.net/release_image/60591/1189/60591-1189-a95af2f1df1cdd8fd694402f2ac39657-2000x2000.png?format=jpeg&auto=webp&quality=85%2C65&width=1950&height=1350&fit=bounds',
-        url: 'https://prtimes.jp/main/html/rd/p/000001189.000060591.html',
-    });
-    }, []);
-
+type Props = {
+    pressRelease: PressRelease | undefined;
+}
+
+export const PressReleaseCard = ({pressRelease}: Props) => {
+    if (!pressRelease) return null
     return (
-        <div style={{ margin: '50px' }}>
-            <Card
-                hoverable
-                style={{ width: '50vw', height: '100vh' }}
-                bodyStyle={{ overflow: 'auto', height: '100vh' }}
-            >
-                <img alt="example" src={pressRelease.image} />
-                <Title level={4}>{pressRelease.title}</Title>
-                <Title level={5}>{pressRelease.subtitle}</Title>
-                <Paragraph>{pressRelease.leadParagraph}</Paragraph>
-                <Paragraph>{pressRelease.body}</Paragraph>
-                <a href={pressRelease.url}>元のページに飛ぶ</a>
-            </Card>
-        </div>
+        <Card 
+            hoverable
+            bodyStyle={{ overflow: 'auto', height: '75vh' }}
+        >
+            <img alt="example" src={pressRelease.mainImage} />
+            <Title level={4}>{pressRelease.title}</Title>
+            <Title level={5}>{pressRelease.subTitle}</Title>
+            <Paragraph>{pressRelease.leadParagraph}</Paragraph>
+            <div dangerouslySetInnerHTML={{__html: pressRelease.body}}></div>
+            <a href={pressRelease.url}>元のページに飛ぶ</a>
+        </Card>
     );
 }

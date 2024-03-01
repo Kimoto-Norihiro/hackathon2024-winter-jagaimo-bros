@@ -12,7 +12,6 @@ export type QuizSet = {
 }
 
 export type PressRelease = {
-	companyName: string;
 	companyId: number;
 	releaseId: number;
 	title: string;

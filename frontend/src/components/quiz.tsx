@@ -1,19 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Alert, Card, Spin, Radio, Button, Col, Row } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { LoadingOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useQuizGetApi } from './useQuizGetApi';
-import { PressRelease } from './pressRelease';
-
-const cardStyle: React.CSSProperties = {
-    width: 800,
-    height: 400,
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-};
+import { PressReleaseCard } from './pressRelease';
 
 const titleStyle: React.CSSProperties = {
     fontFamily: 'Arial, sans-serif',
@@ -21,7 +13,7 @@ const titleStyle: React.CSSProperties = {
     top: 0,
     left: 0,
     width: '100%',
-    padding: '10px',
+    height: '15vh',
     fontSize: '4.5em',
     color: '#fff',
     backgroundColor: '#304a77',
@@ -37,22 +29,21 @@ const radioGroupStyle: React.CSSProperties = {
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-around',
-    height: '100%'
+    height: '100%',
+    color: 'black',
 };
 
 const radioStyle: React.CSSProperties = {
-    fontSize: '1.3em',
-    width: '100%',
+    fontSize: '1.3rem',
     padding: '25px',
-    backgroundColor: '#d3d3d3',
 };
 
 const buttonParentStyle: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'center',
-    position: 'fixed', // 固定位置指定
-    bottom: 70, // 下端に固定
-    width: '100%',
+    // position: 'fixed', // 固定位置指定
+    // bottom: 70, // 下端に固定
+    width: '90%',
     padding: '20px',
 }
 
@@ -71,38 +62,27 @@ export const Quiz = (props: Props) => {
     const pressRelease = data?.press_release_ID;
     const question = data?.quiz;
 
-    const questions = [
-    {
-        id: 1,
-        question: 'プログラミングは楽しいですか？',
-        choices: ["選択肢1", "選択肢2", "選択肢3",  "選択肢4"],
-        correctAnswer: 0
-    },
-    {
-        id: 2,
-        question: 'AIは未来を変える力を持っていますか？',
-        choices: ["選択肢1", "選択肢2", "選択肢3",  "選択肢4"],
-        correctAnswer: 1
-    },
-    // 他の問題を追加
-    ];
+    useEffect(() => {
+        console.log('pressRelease', pressRelease);
+        console.log('question', question);
+    }, [pressRelease, question]);
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
 
     const onChange = (e: RadioChangeEvent) => {
-    setSelectedAnswer(e.target.value);
+        setSelectedAnswer(e.target.value);
     };
 
     const onNextQuestion = () => {
     // 答えをチェックして結果を処理するなどの追加のロジックをここに追加できます
-    if (selectedAnswer !== null) {
-        // 次の質問へ進みます
-        setSelectedAnswer(null);
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-    } else {
-        alert('回答を選択してください');
-    }
+        if (selectedAnswer !== null) {
+            // 次の質問へ進みます
+            setSelectedAnswer(null);
+            setCurrentQuestionIndex(currentQuestionIndex + 1);
+        } else {
+            alert('回答を選択してください');
+        }
     };
 
     const [answered, setAnswered] = useState(false);
@@ -116,34 +96,36 @@ export const Quiz = (props: Props) => {
             width: '100vw',//ビューポイントの幅に合わせる
             overflow: 'auto',
             background: 'linear-gradient(#304a77, white)',
-            padding: '0 50px',
+            // padding: '0 50px',
             boxSizing: 'border-box',
             position: 'relative'
         }}>
-            <div style={{...titleStyle, zIndex: 1
-            }}>
-            PR TIMESクイズ
+            <div style={{...titleStyle, zIndex: 1}}>
+                PR TIMESクイズ
             </div>
-            <div style={{
-            backgroundColor: 'transparent',
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            position: 'relative' // 親要素を相対的な位置指定に変更
-            }}>
+            <div 
+                style={{
+                    backgroundColor: 'transparent',
+                    width: '100%',
+                    height: '100%',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    position: 'relative', // 親要素を相対的な位置指定に変更
+                    paddingTop: '15vh', // タイトルの高さ分だけ下にずらす
+                }}
+            >
                 {!loading && question ? (
-                    <Row gutter={16}>
-                        <Col span={12}>
-                            <Card style={cardStyle}>
-                                <h2 style={{ fontSize:'2em'}}>{questions[currentQuestionIndex].question}</h2>
+                    <div className='container mw-auto h-[75vh] flex'>
+                        <div style={{ width: '50vw', height: '100%' }} className='justify-center'>
+                            <Card style={{ width: '90%' }}>
+                                <h2 style={{ fontSize:'2em'}} className='mb-2'>{question.question}</h2>
                                 <Radio.Group onChange={onChange} value={selectedAnswer} style={radioGroupStyle}>
-                                {question.choices.map((choice, index) => (
-                                    <Radio key={index} style={radioStyle} value={index}>
-                                        {choice}
-                                    </Radio>
-                                ))}
+                                    {question.choices.map((choice, index) => (
+                                        <Radio key={index} style={radioStyle} value={index} >
+                                            {choice}
+                                        </Radio>
+                                    ))}
                                 </Radio.Group>
                             </Card>
                             <div style={buttonParentStyle}>
@@ -168,12 +150,11 @@ export const Quiz = (props: Props) => {
                                     </Button>
                                 }
                             </div>
-                        </Col>
-                        <Col span={12}>
-                            {/* この<PressReleaseを表示した時前提のデザインでお願いします */}
-                            {/* <PressRelease /> */}
-                        </Col>
-                    </Row>
+                        </div>
+                        <div style={{ width: '50vw', height: '50%' }}>
+                            <PressReleaseCard pressRelease={pressRelease} />
+                        </div>
+                    </div>
                 ) : (
                     <Alert
                         type="info"

@@ -34,15 +34,13 @@ const radioGroupStyle: React.CSSProperties = {
 };
 
 const radioStyle: React.CSSProperties = {
-    fontSize: '1.3rem',
+    fontSize: '1rem',
     padding: '25px',
 };
 
 const buttonParentStyle: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'center',
-    // position: 'fixed', // 固定位置指定
-    // bottom: 70, // 下端に固定
     width: '90%',
     padding: '20px',
 }
@@ -119,7 +117,7 @@ export const Quiz = (props: Props) => {
                     <div className='container mw-auto h-[75vh] flex'>
                         <div style={{ width: '50vw', height: '100%' }} className='justify-center'>
                             <Card style={{ width: '90%' }}>
-                                <h2 style={{ fontSize:'2em'}} className='mb-2'>{question.question}</h2>
+                                <p className='text-[1.2rem] mb-2 font-bold'>{question.question}</p>
                                 <Radio.Group onChange={onChange} value={selectedAnswer} style={radioGroupStyle}>
                                     {question.choices.map((choice, index) => (
                                         <Radio key={index} style={radioStyle} value={index} >

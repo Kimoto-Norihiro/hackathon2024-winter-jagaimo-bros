@@ -5,6 +5,7 @@ import { LoadingOutlined } from '@ant-design/icons';
 import { useQuizGetApi } from '@/hooks/useQuizGetApi';
 import { RegenerationModal } from './regenerationModal';
 import { PressReleaseCard } from './pressRelease';
+import { ResultModal } from './resultModal';
 
 const titleStyle: React.CSSProperties = {
     fontFamily: 'Arial, sans-serif',
@@ -68,6 +69,7 @@ export const Quiz = (props: Props) => {
 
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
+    console.log("selectedAnswer", selectedAnswer)
 
     const onChange = (e: RadioChangeEvent) => {
         setSelectedAnswer(e.target.value);
@@ -85,6 +87,7 @@ export const Quiz = (props: Props) => {
     };
 
     const [answered, setAnswered] = useState(false);
+    const [openResult, setOpenResult] = useState(false);
 
     return (
         <div style={{
@@ -133,6 +136,7 @@ export const Quiz = (props: Props) => {
                                     onClick={() => {
                                         setOpenPressReleaseField(true)
                                         setAnswered(true)
+                                        setOpenResult(true)
                                     }
                                 }>
                                     回答
@@ -148,6 +152,13 @@ export const Quiz = (props: Props) => {
                                     次へ
                                     </Button>
                                 }
+                                <ResultModal
+                                    correct={selectedAnswer == question.answer}
+                                    selectedAnswer={selectedAnswer}
+                                    answer={question.answer}
+                                    open={openResult}
+                                    setOpenResult={setOpenResult}
+                                />
                             </div>
                         </div>
                         <div style={{ width: '50vw', height: '50%' }}>

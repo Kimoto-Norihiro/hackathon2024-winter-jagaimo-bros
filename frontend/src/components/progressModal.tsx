@@ -15,8 +15,10 @@ export const ProgressModal = (props: Props) => {
         router.push('/top');
     }
 
+    const { query } = router;
+    const { id } = query;
     const onOk = () => {
-        router.reload();
+        router.push(`/quiz/${id}`)
     }
 
     return (

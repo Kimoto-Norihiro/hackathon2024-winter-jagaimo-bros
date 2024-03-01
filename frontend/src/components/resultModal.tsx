@@ -71,15 +71,15 @@ export const ResultModal = (props: Props) => {
             >
             業種を選択する
             </Button>,
-            <Button key="submit" onClick={onOk}
-                style={{
-                    backgroundColor: '#437DC5',
-                    borderColor: '#437DC5',
-                    color: 'white',
-                }}
-            >
-            同じ業種で続ける
-            </Button>,
+            // <Button key="submit" onClick={onOk}
+            //     style={{
+            //         backgroundColor: '#437DC5',
+            //         borderColor: '#437DC5',
+            //         color: 'white',
+            //     }}
+            // >
+            // 同じ業種で続ける
+            // </Button>,
         ]}
         >
             {correct ? (

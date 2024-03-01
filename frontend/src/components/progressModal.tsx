@@ -15,23 +15,29 @@ export const ProgressModal = (props: Props) => {
         router.push('/top');
     }
 
-    const { query } = useRouter();
-    const { id } = query;
     const onOk = () => {
-        router.push(`${id}`);
+        router.reload();
     }
 
     return (
         <Modal
-            title='業種は同じにしますか？'
-            okText={'次の問題へ'}
-            cancelText={'業種選択画面へ'}
+            title='次の問題の業種を変更しますか？'
+            okText='同じ業種で続ける'
+            cancelText='業種を選択する'
             open={open}
             onCancel={onCancel}
             width={500}
             onOk={onOk}
+            closable={false}
+            maskClosable={false}
+            okButtonProps={{
+                style: {
+                    backgroundColor: '#437DC5',
+                    borderColor: '#437DC5',
+                    color: 'white',
+                }
+            }}
         >
-
         </Modal>
     )
 }

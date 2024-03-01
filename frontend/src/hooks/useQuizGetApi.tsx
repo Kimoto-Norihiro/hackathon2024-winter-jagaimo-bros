@@ -39,22 +39,33 @@ export const useQuizGetApi = () => {
 
     const [data, setData] = useState<QuizResponse>();
     const [loading, setLoading] = useState(false);
-    console.log("back loading", loading);
 
+    // タイムオーバーとエラーが起きたかはこの変数で保持
+    const [overTimeLimit, setOverTimeLimit] = useState(false);
+
+    var timeout: NodeJS.Timeout
     useEffect(() => {
-        const fetchData = async () => {
+        (async () => {
             setLoading(true);
+            setOverTimeLimit(false);
+            timeout = setTimeout(() => {
+                setOverTimeLimit(true);
+            }, 6000);
+
             try {
                 const response = await axios.get(`https://jagaimo-bros-api-eac5862fc2c0.herokuapp.com/generate_quiz/industries/${id}`);
                 setData(response.data);
-                console.log("response data", response.data);
+                console.log("response", response);
             } catch (error) {
+                setOverTimeLimit(true);
                 console.error('Error: ', error);
+            } finally {
+                clearTimeout(timeout);
+                setLoading(false);
             }
-            setLoading(false);
-            };
-            fetchData();
+        })();
+        clearTimeout(timeout);
     }, []);
 
-    return { loading, data };
+    return { loading, data, overTimeLimit };
 }

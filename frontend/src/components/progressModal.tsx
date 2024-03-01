@@ -1,4 +1,4 @@
-import { Modal } from 'antd';
+import { Modal, Button } from 'antd';
 import { useRouter } from 'next/router';
 
 type Props = {
@@ -27,9 +27,7 @@ export const ProgressModal = (props: Props) => {
             okText='同じ業種で続ける'
             cancelText='業種を選択する'
             open={open}
-            onCancel={onCancel}
             width={500}
-            onOk={onOk}
             closable={false}
             maskClosable={false}
             okButtonProps={{
@@ -39,6 +37,17 @@ export const ProgressModal = (props: Props) => {
                     color: 'white',
                 }
             }}
+            footer={[
+                <Button key="extra" onClick={onCancel}
+                style={{
+                    backgroundColor: '#437DC5',
+                    borderColor: '#437DC5',
+                    color: 'white',
+                }}
+            >
+            業種を選択する
+            </Button>
+            ]}
         >
         </Modal>
     )

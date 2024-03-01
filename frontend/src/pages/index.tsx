@@ -58,7 +58,7 @@ export const Home: NextPage = () => {
         <>
           <div style={contentStyle}>
             <div style={headerStyle}>
-              <Title level={1} style={titleStyle}>PR Timesクイズへようこそ</Title>
+              <Title level={1} style={titleStyle}>PR TIMESクイズへようこそ</Title>
             </div>
             <Button onClick={onStart} style={buttonStyle}>クイズを始める</Button>
           </div>

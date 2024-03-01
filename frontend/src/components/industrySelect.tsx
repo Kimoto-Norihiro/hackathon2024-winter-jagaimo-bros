@@ -59,7 +59,7 @@ export const IndustrySelect = () => {
                     <div key={rowIndex} className='flex'> 
                         {row.map((buttonLabel, colIndex) => (
                             <Col span={6} key={colIndex}>
-                                <Button 
+                                <Button
                                     style={buttonStyle}
                                     onClick={() => handleClick(rowIndex * 4 + colIndex + 1)}
                                 >

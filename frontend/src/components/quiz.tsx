@@ -2,9 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Card, Spin, Radio, Button, Col, Row } from 'antd';
 import { RadioChangeEvent } from 'antd/lib/radio';
 import { LoadingOutlined } from '@ant-design/icons';
-import { useRouter } from 'next/router';
-import axios from 'axios';
-import { useQuizGetApi } from './useQuizGetApi';
+import { useQuizGetApi } from '@/hooks/useQuizGetApi';
+import { RegenerationModal } from './regenerationModal';
 import { PressReleaseCard } from './pressRelease';
 
 const titleStyle: React.CSSProperties = {
@@ -54,7 +53,7 @@ type Props = {
 export const Quiz = (props: Props) => {
     const { setOpenPressReleaseField, setOpenProgressModal } = props;
 
-    const { loading, data } = useQuizGetApi();
+    const { loading, data, overTimeLimit } = useQuizGetApi();
 
     // Apiから取得したプレスリリースとクイズです
     const pressRelease = data?.press_release_ID;
@@ -136,7 +135,7 @@ export const Quiz = (props: Props) => {
                                 }>
                                     回答
                                 </Button>
-                                {answered && 
+                                {answered &&
                                     <Button 
                                         style={{backgroundColor: "ButtonHighlight"}} 
                                         onClick={ () => {
@@ -154,16 +153,19 @@ export const Quiz = (props: Props) => {
                         </div>
                     </div>
                 ) : (
-                    <Alert
-                        type="info"
-                        message={
-                            <div style={{width: '150px' }}>
-                                <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> 問題を生成中です
-                            </div>
-                        }
-                    />
+                    !overTimeLimit ? (
+                        <Alert
+                            type="info"
+                            message={
+                                <div style={{width: '150px' }}>
+                                    <Spin indicator={<LoadingOutlined style={{ fontSize: 24 }} spin />} /> 問題を生成中です
+                                </div>
+                            }
+                        />
+                    ) : (
+                        <RegenerationModal />
+                    )
                 )}
-                
             </div>
         </div>  
     );
